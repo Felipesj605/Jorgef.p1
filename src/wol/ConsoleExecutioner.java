@@ -6,9 +6,10 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
     private char invalidChar_;
     private java.util.Collection<java.lang.String> words_;
     private java.util.Collection<java.lang.Character> lettersGuessed_;
+    private String secretWord_;
 
     ConsoleExecutioner(ConsoleInterface ui){
-
+        secretWord_ = "ui.selectSecretWord();";
     }
 
     @Override
@@ -30,7 +31,17 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
         return lettersGuessed_;
     }
 
-//    public String formattedSecretWord(){
-//        return
-//    }
+    public String formattedSecretWord(){
+
+        StringBuilder formatedWord = new StringBuilder();
+        for (int i = 0; i < secretWord_.length(); i++){
+            char currentChar = secretWord_.charAt(i);
+            if (guessedLetters().contains(currentChar)){
+                formatedWord.append(Character.toUpperCase(currentChar));
+            } else {
+                formatedWord.append(secretWord_.charAt(i));
+            }
+        }
+        return formatedWord.toString();
+    }
 }
