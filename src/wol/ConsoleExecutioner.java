@@ -44,4 +44,44 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
         }
         return formatedWord.toString();
     }
+
+    public int countOfPossibleWords(){
+        return words_.size();
+    }
+
+    public boolean letterAlreadyGuessed(char letter){
+        return lettersGuessed_.contains(letter);
+    }
+
+    public int registerAGuess(char letter){
+        int nbTimesCharAppears = 0;
+        lettersGuessed_.add(letter);
+        currentGuesses_++;
+
+        for (int i = 0; i < secretWord_.length();i++){
+            if (secretWord_.charAt(i) == letter){
+                nbTimesCharAppears++;
+            }
+        }
+        return nbTimesCharAppears;
+    }
+
+    java.lang.String revealSecretWord(){
+        return secretWord_.toUpperCase();
+    }
+
+    public boolean isGameOver(){
+        return (guessedTheWord() && maxGuesses_ < currentGuesses_);
+    }
+
+    private boolean guessedTheWord(){
+        boolean bool = true;
+        for (int i =0;i < secretWord_.length(); i++){
+            if (!lettersGuessed_.contains(secretWord_.charAt(i))){
+                bool = false;
+            }
+        }
+        return bool;
+    }
+
 }
