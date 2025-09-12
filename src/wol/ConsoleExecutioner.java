@@ -57,10 +57,15 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
         int nbTimesCharAppears = 0;
         lettersGuessed_.add(letter);
         currentGuesses_++;
-
         for (int i = 0; i < secretWord_.length();i++){
             if (secretWord_.charAt(i) == letter){
                 nbTimesCharAppears++;
+            }
+        }
+
+        for (String word : words_) {
+            if (!word.contains(String.valueOf(letter))) {
+                words_.remove(word);
             }
         }
         return nbTimesCharAppears;
