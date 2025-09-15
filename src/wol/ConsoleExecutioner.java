@@ -9,7 +9,7 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
     private String secretWord_;
     private ConsoleInterface ui_;
 
-    ConsoleExecutioner(ConsoleInterface ui){
+    public ConsoleExecutioner(ConsoleInterface ui){
         ui_ = ui;
     }
 
@@ -99,7 +99,7 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
         return nbTimesCharAppears;
     }
 
-    java.lang.String revealSecretWord(){
+    public java.lang.String revealSecretWord(){
         return secretWord_.toUpperCase();
     }
 
