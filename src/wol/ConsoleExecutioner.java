@@ -9,11 +9,13 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
     private String secretWord_;
     private ConsoleInterface ui_;
 
+
+    //Constructor that takes in a ConsoleInterface to ask the user for a secret word.
     public ConsoleExecutioner(ConsoleInterface ui){
         ui_ = ui;
     }
 
-    @Override
+    //This is the only method of ConsoleExecutioner that takes user input.
     public void newGame(java.util.Collection<java.lang.String> words, int maxIncorrectGuesses, char invalidChar){
         maxGuesses_ = maxIncorrectGuesses;
         invalidChar_ = invalidChar;
@@ -23,16 +25,16 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
         secretWord_ = ui_.selectSecretWord(words_);
     }
 
-    @Override
+    //Returns the number of incorrect letter guesses the condemned can make before losing.
     public int incorrectGuessesRemaining(){
         return maxGuesses_ - currentGuesses_;
     }
 
-    @Override
     public java.util.Collection<java.lang.Character> guessedLetters(){
         return lettersGuessed_;
     }
 
+    //Return a specially formatted version of the secret word.
     public String formattedSecretWord(){
 
         StringBuilder formatedWord = new StringBuilder();
@@ -47,14 +49,17 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
         return formatedWord.toString();
     }
 
+    //Returns the count of words that could still be the secret word.
     public int countOfPossibleWords(){
         return words_.size();
     }
 
+    //Returns true if the given letter has already been guessed by the condemned.
     public boolean letterAlreadyGuessed(char letter){
         return lettersGuessed_.contains(letter);
     }
 
+    //Registers the condemned next guess.
     public int registerAGuess(char letter){
         int nbTimesCharAppears = 0;
         lettersGuessed_.add(letter);
@@ -99,14 +104,17 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
         return nbTimesCharAppears;
     }
 
+    //Return the secret word.
     public java.lang.String revealSecretWord(){
         return secretWord_.toUpperCase();
     }
 
+    //Returns true if the game is over.
     public boolean isGameOver(){
         return (guessedTheWord() || currentGuesses_ >= maxGuesses_);
     }
 
+    //Returns a collection of the letters the condemned has already guessed.
     private boolean guessedTheWord(){
         boolean bool = true;
         for (int i =0;i < secretWord_.length(); i++){

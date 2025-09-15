@@ -13,6 +13,7 @@ public class WheelOfLies extends java.lang.Object {
         invalidChar_ = invalidCharacter;
     }
 
+    //Game loop
     public void playGame(){
         boolean playAgain = true;
         

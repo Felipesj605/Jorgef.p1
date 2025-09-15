@@ -28,6 +28,7 @@ public class MS1Main {
         }
     }
 
+    // reads and stores words from txt file
     private static Collection<String> loadWordsFromFile(String filename) throws FileNotFoundException {
         Collection<String> words = new ArrayList<>();
         File file = new File(filename);
