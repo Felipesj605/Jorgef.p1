@@ -17,7 +17,7 @@ public class ConsoleInterface {
     public int askForMaximumMisses() {
         int input = 0;
         while(input <= 0){
-            out.print("Enter the maximum number of incorrect guesses allowed: ");
+            out.print("Enter number of guesses: ");
             input = scanner.nextInt();
         }
         scanner.nextLine();
@@ -30,7 +30,7 @@ public class ConsoleInterface {
         boolean validLength = false;
 
         while (!validLength) {
-            out.print("Enter the desired word length: ");
+            out.print("Enter the word length: ");
             length = scanner.nextInt();
             scanner.nextLine();
 
@@ -87,7 +87,7 @@ public class ConsoleInterface {
         boolean displayWordCount = false;
         
         while (!validInput) {
-            out.print("Do you want a total of the number of possible words? y/n");
+            out.print("Would you like to see the word count (Y/N)? ");
             String input = scanner.nextLine().trim();
             
             if (input.equalsIgnoreCase("y")) {
@@ -155,7 +155,7 @@ public class ConsoleInterface {
         boolean validWord = false;
         
         // First time: print all possible words
-        out.println("Available words:");
+        out.println("Possible Secret Words:");
         for (String word : secretWords) {
             out.println(word);
         }
