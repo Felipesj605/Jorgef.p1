@@ -20,6 +20,7 @@ public class ConsoleInterface {
             out.print("Enter the maximum number of incorrect guesses allowed: ");
             input = scanner.nextInt();
         }
+        scanner.nextLine();
         return input;
     }
 
@@ -82,8 +83,25 @@ public class ConsoleInterface {
 
     //Prompt the user to see if they want a running total of the number of possible words to be displayed during play.
     public boolean askToDisplayWordCount(){
-        out.print("Do you want a total of the number of possible words? (y/n): ");
-        return scanner.nextLine().trim().equalsIgnoreCase("y");
+        boolean validInput = false;
+        boolean displayWordCount = false;
+        
+        while (!validInput) {
+            out.print("Do you want a total of the number of possible words? y/n");
+            String input = scanner.nextLine().trim();
+            
+            if (input.equalsIgnoreCase("y")) {
+                displayWordCount = true;
+                validInput = true;
+            } else if (input.equalsIgnoreCase("n")) {
+                displayWordCount = false;
+                validInput = true;
+            } else {
+                out.println("enter 'y' for yes or 'n' for no.");
+            }
+        }
+        
+        return displayWordCount;
     }
 
     public void displayGameOver(java.lang.String secretWord, boolean playerWins){
