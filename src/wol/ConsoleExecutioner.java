@@ -41,7 +41,7 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
             if (guessedLetters().contains(Character.toUpperCase(currentChar))){
                 formatedWord.append(Character.toUpperCase(currentChar));
             } else {
-                formatedWord.append(secretWord_.charAt(i));
+                formatedWord.append("*");
             }
         }
         return formatedWord.toString();
