@@ -12,7 +12,7 @@ public class MS1Main {
         try {
             Scanner scanner = new Scanner(System.in);
             PrintStream out = System.out;
-            Collection<String> words = loadWordsFromFile("resources/lexicon.txt");
+            Collection<String> words = loadWordsFromFile();
             Lexicon lexicon = new Lexicon(words);
             ConsoleInterface ui = new ConsoleInterface(scanner, out);
             ConsoleExecutioner executioner = new ConsoleExecutioner(ui);
@@ -29,9 +29,9 @@ public class MS1Main {
     }
 
     // reads and stores words from txt file
-    private static Collection<String> loadWordsFromFile(String filename) throws FileNotFoundException {
+    private static Collection<String> loadWordsFromFile() throws FileNotFoundException {
         Collection<String> words = new ArrayList<>();
-        File file = new File(filename);
+        File file = new File("resources/lexicon.txt");
         Scanner fileScanner = new Scanner(file);
         
         while (fileScanner.hasNextLine()) {
