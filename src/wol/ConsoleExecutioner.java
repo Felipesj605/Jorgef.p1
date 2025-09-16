@@ -82,10 +82,16 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
             boolean shouldRemove = false;
             
             if (nbTimesCharAppears > 0) {
-                // Letter is in secret word - remove words that don't have the letter in the same positions
                 for (int i = 0; i < secretWord_.length(); i++) {
-                    if (Character.toLowerCase(secretWord_.charAt(i)) == Character.toLowerCase(letter) && 
-                        Character.toLowerCase(word.charAt(i)) != Character.toLowerCase(letter)) {
+                    char secretCh = Character.toLowerCase(secretWord_.charAt(i));
+                    char wordCh = Character.toLowerCase(word.charAt(i));
+                    char guessCh = Character.toLowerCase(letter);
+
+                    if (secretCh == guessCh && wordCh != guessCh) {
+                        shouldRemove = true;
+                        break;
+                    }
+                    if (secretCh != guessCh && wordCh == guessCh) {
                         shouldRemove = true;
                         break;
                     }
