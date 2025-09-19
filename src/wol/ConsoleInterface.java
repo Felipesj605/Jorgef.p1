@@ -127,12 +127,11 @@ public class ConsoleInterface {
         }
         
         // Display current state of secret word
-        ConsoleExecutioner consoleExecutioner = (ConsoleExecutioner) executioner;
-        out.println("Secret word: " + consoleExecutioner.formattedSecretWord());
+        out.println("Secret word: " + executioner.formattedSecretWord());
         
         // Display word count if requested
         if (displayWordCount) {
-            out.println("Number of possible words: " + consoleExecutioner.countOfPossibleWords());
+            out.println("Number of possible words: " + executioner.countOfPossibleWords());
         }
     }
 

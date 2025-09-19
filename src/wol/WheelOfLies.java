@@ -30,17 +30,17 @@ public class WheelOfLies extends java.lang.Object {
             while (!gameOver) {
                 consoleInterface_.displayGameState(executioner_, displayWordCount);
                 char guess = consoleInterface_.askNextGuess(executioner_);
-                int occurrences = ((ConsoleExecutioner) executioner_).registerAGuess(guess);
+                int occurrences = executioner_.registerAGuess(guess);
                 consoleInterface_.displayResultsOfGuess(guess, occurrences);
-                gameOver = ((ConsoleExecutioner) executioner_).isGameOver();
+                gameOver = executioner_.isGameOver();
 
                 if (gameOver) {
-                    String secretWord = ((ConsoleExecutioner) executioner_).revealSecretWord();
-                    String formattedWord = ((ConsoleExecutioner) executioner_).formattedSecretWord();
+                    String secretWord = executioner_.revealSecretWord();
+                    String formattedWord = executioner_.formattedSecretWord();
                     playerWins = formattedWord.equals(secretWord);
                 }
             }
-            String secretWord = ((ConsoleExecutioner) executioner_).revealSecretWord();
+            String secretWord = executioner_.revealSecretWord();
             consoleInterface_.displayGameOver(secretWord, playerWins);
             playAgain = consoleInterface_.playAgain();
         }
