@@ -20,8 +20,6 @@ public class CheatingExeecutioner extends java.lang.Object implements Executione
         words_ = words;
         currentGuesses_ = 0;
         lettersGuessed_ = new java.util.ArrayList<>();
-        
-        // Don't pick a secret word yet - wait until only one word remains
         secretWord_ = null;
     }
 
@@ -33,19 +31,32 @@ public class CheatingExeecutioner extends java.lang.Object implements Executione
     public java.util.Collection<java.lang.Character> guessedLetters(){
         return lettersGuessed_;
     }
+    
+    // Get word length from the word collection
+    private int getWordLength() {
+        return words_.isEmpty() ? 0 : words_.iterator().next().length();
+    }
 
     //Return a specially formatted version of the secret word.
     public String formattedSecretWord(){
 
         StringBuilder formatedWord = new StringBuilder();
-        for (int i = 0; i < secretWord_.length(); i++){
-            char currentChar = secretWord_.charAt(i);
-            if (guessedLetters().contains(Character.toUpperCase(currentChar))){
-                formatedWord.append(Character.toUpperCase(currentChar));
-            } else {
-                formatedWord.append(invalidChar_);
+        if (secretWord_ != null){
+            for (int i = 0; i < secretWord_.length(); i++){
+                char currentChar = secretWord_.charAt(i);
+                if (lettersGuessed_.contains(Character.toUpperCase(currentChar))){
+                    formatedWord.append(Character.toUpperCase(currentChar));
+                } else {
+                    formatedWord.append(invalidChar_);
+                }
             }
         }
+        else {
+            for (int i = 0; i < getWordLength(); i++){
+                formatedWord.append('*');
+            }
+        }
+
         return formatedWord.toString();
     }
 
@@ -61,7 +72,10 @@ public class CheatingExeecutioner extends java.lang.Object implements Executione
 
     //Registers the condemned next guess.
     public int registerAGuess(char letter){
-        lettersGuessed_.add(letter);
+        
+        if (!lettersGuessed_.contains(letter)) {
+            lettersGuessed_.add(letter);
+        }
         
         java.util.Map<String, java.util.List<String>> wordFamilies = createWordFamilies(letter);
         
@@ -76,7 +90,7 @@ public class CheatingExeecutioner extends java.lang.Object implements Executione
             secretWord_ = words_.iterator().next();
         }
 
-        int nbTimesCharAppears = countLetterOccurrences(largestFamilyPattern, letter);
+        int nbTimesCharAppears = countTimesCharAppears(largestFamilyPattern, letter);
         
         if (nbTimesCharAppears == 0) {
             currentGuesses_++;
@@ -113,22 +127,37 @@ public class CheatingExeecutioner extends java.lang.Object implements Executione
     }
     
     private String selectLargestWordFamily(java.util.Map<String, java.util.List<String>> families) {
-        String largestPattern = null;
+        String bestPattern = null;
         int largestSize = 0;
+        int minOccurrences = Integer.MAX_VALUE;
         
-        // Find the largest family
+        // Single pass optimization: find largest family with fewest occurrences
         for (java.util.Map.Entry<String, java.util.List<String>> entry : families.entrySet()) {
             int familySize = entry.getValue().size();
-            if (familySize > largestSize) {
+            String pattern = entry.getKey();
+            
+            // Count letter occurrences in this pattern
+            int occurrences = 0;
+            for (int i = 0; i < pattern.length(); i++) {
+                if (pattern.charAt(i) != '_') {
+                    occurrences++;
+                }
+            }
+
+            boolean shouldSelect = (familySize > largestSize) || 
+                                 (familySize == largestSize && occurrences < minOccurrences);
+            
+            if (shouldSelect) {
                 largestSize = familySize;
-                largestPattern = entry.getKey();
+                minOccurrences = occurrences;
+                bestPattern = pattern;
             }
         }
         
-        return largestPattern;
+        return bestPattern;
     }
 
-    private int countLetterOccurrences(String pattern, char letter) {
+    private int countTimesCharAppears(String pattern, char letter) {
         int count = 0;
         char upperLetter = Character.toUpperCase(letter);
         for (int i = 0; i < pattern.length(); i++) {
@@ -141,7 +170,15 @@ public class CheatingExeecutioner extends java.lang.Object implements Executione
 
     //Return the secret word.
     public java.lang.String revealSecretWord(){
-        return secretWord_.toUpperCase();
+        String result = "unknown";
+        
+        if (secretWord_ != null) {
+            result = secretWord_.toUpperCase();
+        } else if (!words_.isEmpty()) {
+            result = words_.iterator().next().toUpperCase();
+        }
+        
+        return result;
     }
 
     //Returns true if the game is over.
@@ -151,12 +188,18 @@ public class CheatingExeecutioner extends java.lang.Object implements Executione
 
     //Returns a collection of the letters the condemned has already guessed.
     private boolean guessedTheWord(){
-        boolean bool = true;
-        for (int i =0;i < secretWord_.length(); i++){
-            if (!lettersGuessed_.contains(Character.toUpperCase(secretWord_.charAt(i)))){
-                bool = false;
+        boolean allLettersGuessed = false;
+        
+        if (secretWord_ != null) {
+            allLettersGuessed = true;
+            // Check if ALL letters in the secret word have been guessed
+            for (int i = 0; i < secretWord_.length() && allLettersGuessed; i++) {
+                if (!lettersGuessed_.contains(Character.toUpperCase(secretWord_.charAt(i)))) {
+                    allLettersGuessed = false;
+                }
             }
         }
-        return bool;
+        
+        return allLettersGuessed;
     }
 }
