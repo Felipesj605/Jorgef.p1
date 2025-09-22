@@ -88,18 +88,18 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
             
             if (nbTimesCharAppears > 0) {
                 int i = 0;
-                boolean done = false;
-                while (i < secretWord_.length() && !done) {
+                boolean stop = false;
+                while (i < secretWord_.length() && !stop) {
                     char secretCh = Character.toLowerCase(secretWord_.charAt(i));
                     char wordCh = Character.toLowerCase(word.charAt(i));
                     char guessCh = Character.toLowerCase(letter);
 
                     if (secretCh == guessCh && wordCh != guessCh) {
                         shouldRemove = true;
-                        done = true;
+                        stop = true;
                     } else if (secretCh != guessCh && wordCh == guessCh) {
                         shouldRemove = true;
-                        done = true;
+                        stop = true;
                     } else {
                         // keep checking
                     }

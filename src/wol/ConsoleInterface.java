@@ -41,14 +41,12 @@ public class ConsoleInterface {
 
             if (length <= 0) {
                 out.println("Invalid length. Please enter a positive number.");
-                continue;
             }
 
             // Check if words of this length exist in the lexicon
             Collection<String> wordsOfLength = lexicon.wordsOfLength(length);
             if (wordsOfLength.isEmpty()) {
                 out.println("No words of length " + length + " exist in the lexicon. Please try a different length.");
-                continue;
             }
 
             validLength = true;

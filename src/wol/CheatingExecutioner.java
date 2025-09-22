@@ -47,19 +47,15 @@ public class CheatingExecutioner extends java.lang.Object implements Executioner
     public String formattedSecretWord(){
 
         StringBuilder formatedWord = new StringBuilder();
-        if (secretWord_ != null){
-            for (int i = 0; i < secretWord_.length(); i++){
-                char currentChar = secretWord_.charAt(i);
-                if (lettersGuessed_.contains(Character.toUpperCase(currentChar))){
-                    formatedWord.append(Character.toUpperCase(currentChar));
-                } else {
-                    formatedWord.append(invalidChar_);
-                }
+        for (int i = 0; i < getWordLength(); i++){
+            char currentChar = ' ';
+            if(secretWord_ != null){
+                currentChar = secretWord_.charAt(i);
             }
-        }
-        else {
-            for (int i = 0; i < getWordLength(); i++){
-                formatedWord.append('*');
+            else if (lettersGuessed_.contains(Character.toUpperCase(currentChar))){
+                formatedWord.append(Character.toUpperCase(currentChar));
+            } else {
+                formatedWord.append(invalidChar_);
             }
         }
 
