@@ -19,7 +19,7 @@ public class CheatingExeecutioner extends java.lang.Object implements Executione
         invalidChar_ = invalidChar;
         words_ = words;
         currentGuesses_ = 0;
-        lettersGuessed_ = new java.util.ArrayList<>();
+        lettersGuessed_ = new java.util.TreeSet<>();
         secretWord_ = null;
     }
 

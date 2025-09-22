@@ -21,7 +21,7 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
         invalidChar_ = invalidChar;
         words_ = words;
         currentGuesses_ = 0;
-        lettersGuessed_ = new java.util.ArrayList<>();
+        lettersGuessed_ = new java.util.TreeSet<>();
         secretWord_ = ui_.selectSecretWord(words_);
     }
 
