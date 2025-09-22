@@ -15,7 +15,7 @@ public class Main {
             Collection<String> words = loadWordsFromFile();
             Lexicon lexicon = new Lexicon(words);
             ConsoleInterface ui = new ConsoleInterface(scanner, out);
-            CheatingExeecutioner executioner = new CheatingExeecutioner();
+            CheatingExecutioner executioner = new CheatingExecutioner();
 
             char invalidCharacter = '*';
 

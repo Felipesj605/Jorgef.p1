@@ -1,6 +1,6 @@
 package wol;
 
-public class CheatingExeecutioner extends java.lang.Object implements Executioner {
+public class CheatingExecutioner extends java.lang.Object implements Executioner {
     private int maxGuesses_;
     private int currentGuesses_;
     private char invalidChar_;
@@ -10,7 +10,7 @@ public class CheatingExeecutioner extends java.lang.Object implements Executione
     private String secretWord_;
 
     // Default contructor
-    public CheatingExeecutioner(){
+    public CheatingExecutioner(){
     }
 
     //This is the only method of ConsoleExecutioner that takes user input.
