@@ -68,16 +68,13 @@ public class ConsoleInterface {
 
             if (input.isEmpty()) {
                 out.println("Please enter a letter.");
-                continue;
             }
             guess = Character.toUpperCase(input.charAt(0));
             if (!Character.isLetter(guess)) {
                 out.println("Please enter a valid letter (a-z or A-Z).");
-                continue;
             }
             if (executioner.guessedLetters().contains(guess)) {
                 out.println("You have already guessed the letter '" + guess + "'. Please try a different letter.");
-                continue;
             }
 
             validGuess = true;
