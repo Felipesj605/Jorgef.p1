@@ -1,7 +1,12 @@
+/*
+This class encapsulates the AI that cheats at hangman.
+It also encapsulates the game state for Wheel of Lies.
+Made by @Rene Bourdeth and @Felipe Jorge
+ */
 package wol;
 
 public class CheatingExecutioner extends java.lang.Object implements Executioner {
-    private int maxGuesses_;
+    private static int maxGuesses_;
     private int currentGuesses_;
     private char invalidChar_;
     private java.util.Collection<java.lang.String> words_;
@@ -28,6 +33,7 @@ public class CheatingExecutioner extends java.lang.Object implements Executioner
         return maxGuesses_ - currentGuesses_;
     }
 
+    //Returns a collection of the letters the condemned has already guessed.
     public java.util.Collection<java.lang.Character> guessedLetters(){
         return lettersGuessed_;
     }

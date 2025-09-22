@@ -1,3 +1,7 @@
+/*
+This abstract class provides the main method for the final project.
+Made by @Rene Bourdeth and @Felipe Jorge
+ */
 package wol;
 
 import java.io.File;
@@ -8,6 +12,7 @@ import java.util.Collection;
 import java.util.Scanner;
 
 public class Main {
+    //This method sets up and starts a console-based game of wheel of lies.
     public static void main(String[] args) {
         try {
             Scanner scanner = new Scanner(System.in);

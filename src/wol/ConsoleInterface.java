@@ -1,3 +1,7 @@
+/*
+This class provides a console interface for a game of Wheel of Lies.
+Made by @Rene Bourdeth and @Felipe Jorge
+ */
 package wol;
 
 import java.io.PrintStream;
@@ -7,7 +11,8 @@ import java.util.Scanner;
 public class ConsoleInterface {
     private Scanner scanner;
     private PrintStream out;
-    
+
+    //Creates an instance of ConsoleInterface.
     public ConsoleInterface(Scanner scanner, PrintStream out) {
         this.scanner = scanner;
         this.out = out;
@@ -56,7 +61,7 @@ public class ConsoleInterface {
     public char askNextGuess(Executioner executioner) {
         char guess = ' ';
         boolean validGuess = false;
-        
+
         while (!validGuess) {
             out.print("Enter your next guess: ");
             String input = scanner.nextLine().trim();
@@ -74,10 +79,10 @@ public class ConsoleInterface {
                 out.println("You have already guessed the letter '" + guess + "'. Please try a different letter.");
                 continue;
             }
-            
+
             validGuess = true;
         }
-        
+
         return guess;
     }
 
@@ -85,11 +90,11 @@ public class ConsoleInterface {
     public boolean askToDisplayWordCount(){
         boolean validInput = false;
         boolean displayWordCount = false;
-        
+
         while (!validInput) {
             out.print("Would you like to see the word count (Y/N)? ");
             String input = scanner.nextLine().trim();
-            
+
             if (input.equalsIgnoreCase("y")) {
                 displayWordCount = true;
                 validInput = true;
@@ -100,10 +105,11 @@ public class ConsoleInterface {
                 out.println("enter 'y' for yes or 'n' for no.");
             }
         }
-        
+
         return displayWordCount;
     }
 
+    //Displays gameover
     public void displayGameOver(java.lang.String secretWord, boolean playerWins){
         if (playerWins) {
             out.println("Congratulations! You won! The secret word was: " + secretWord);
@@ -112,6 +118,7 @@ public class ConsoleInterface {
         }
     }
 
+    //Displays the gamestate
     public void displayGameState(Executioner executioner, boolean displayWordCount){
         out.println("Misses remaining: " + executioner.incorrectGuessesRemaining());
 
@@ -125,16 +132,17 @@ public class ConsoleInterface {
             }
             out.println();
         }
-        
+
         // Display current state of secret word
         out.println("Secret word: " + executioner.formattedSecretWord());
-        
+
         // Display word count if requested
         if (displayWordCount) {
             out.println("Number of possible words: " + executioner.countOfPossibleWords());
         }
     }
 
+    //Display the results of the user's most recent guess.
     public void displayResultsOfGuess(char guess, int occurrences){
         if (occurrences > 0) {
             out.println("Good guess! '" + guess + "' appears " + occurrences + " time(s) in the word.");
@@ -149,20 +157,21 @@ public class ConsoleInterface {
         return scanner.nextLine().trim().equalsIgnoreCase("y");
     }
 
+    //Asks user to select the secret word from the given collection and enter it in the console.
     public java.lang.String selectSecretWord(java.util.Collection<java.lang.String> secretWords){
         String selectedWord = " ";
         boolean validWord = false;
-        
+
         // First time: print all possible words
         out.println("Possible Secret Words:");
         for (String word : secretWords) {
             out.println(word);
         }
-        
+
         while (!validWord) {
             out.print("Enter the word you want to use: ");
             selectedWord = scanner.nextLine().trim();
-            
+
             // Check if the entered word is in the collection
             if (secretWords.contains(selectedWord)) {
                 validWord = true;
@@ -170,7 +179,7 @@ public class ConsoleInterface {
                 out.println("Invalid word. Please enter one of the words from the list.");
             }
         }
-        
+
         return selectedWord;
     }
 

@@ -1,3 +1,7 @@
+/*
+This class coordinates a games (or a series of games) of Wheel of Lies.
+Made by @Rene Bourdeth and @Felipe Jorge
+ */
 package wol;
 
 public class WheelOfLies extends java.lang.Object {
@@ -6,6 +10,7 @@ public class WheelOfLies extends java.lang.Object {
     private Executioner executioner_;
     private char invalidChar_;
 
+    //Constructor for Wheel of Lies.
     WheelOfLies(Lexicon lexicon, ConsoleInterface ui, Executioner executioner, char invalidCharacter){
         lexicon_ = lexicon;
         consoleInterface_ = ui;

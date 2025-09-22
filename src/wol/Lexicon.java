@@ -1,6 +1,7 @@
 /*
 This class represents a collection of words.
 It can create a filtered collection that only includes words of a specified length.
+Made by @Rene Bourdeth and @Felipe Jorge
  */
 package wol;
 

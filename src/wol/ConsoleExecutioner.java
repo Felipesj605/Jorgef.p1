@@ -1,7 +1,11 @@
+/*
+This class lets a human select the secret word.
+Made by @Rene Bourdeth and @Felipe Jorge
+ */
 package wol;
 
 public class ConsoleExecutioner extends java.lang.Object implements Executioner {
-    private int maxGuesses_;
+    private static int maxGuesses_;
     private int currentGuesses_;
     private char invalidChar_;
     private java.util.Collection<java.lang.String> words_;
@@ -30,6 +34,7 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
         return maxGuesses_ - currentGuesses_;
     }
 
+    //Returns a collection of the letters the condemned has already guessed.
     public java.util.Collection<java.lang.Character> guessedLetters(){
         return lettersGuessed_;
     }
@@ -82,19 +87,23 @@ public class ConsoleExecutioner extends java.lang.Object implements Executioner 
             boolean shouldRemove = false;
             
             if (nbTimesCharAppears > 0) {
-                for (int i = 0; i < secretWord_.length(); i++) {
+                int i = 0;
+                boolean done = false;
+                while (i < secretWord_.length() && !done) {
                     char secretCh = Character.toLowerCase(secretWord_.charAt(i));
                     char wordCh = Character.toLowerCase(word.charAt(i));
                     char guessCh = Character.toLowerCase(letter);
 
                     if (secretCh == guessCh && wordCh != guessCh) {
                         shouldRemove = true;
-                        break;
-                    }
-                    if (secretCh != guessCh && wordCh == guessCh) {
+                        done = true;
+                    } else if (secretCh != guessCh && wordCh == guessCh) {
                         shouldRemove = true;
-                        break;
+                        done = true;
+                    } else {
+                        // keep checking
                     }
+                    i++;
                 }
             } else {
                 // Letter is not in secret word - remove words that contain this letter (case-insensitive)
