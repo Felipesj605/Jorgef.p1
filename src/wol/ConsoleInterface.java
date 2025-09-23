@@ -21,11 +21,28 @@ public class ConsoleInterface {
     //Prompt the user for the number of misses the player is allowed in the game.
     public int askForMaximumMisses() {
         int input = 0;
-        while(input <= 0){
+        boolean validInput = false;
+        
+        while (!validInput) {
             out.print("Enter number of guesses: ");
-            input = scanner.nextInt();
+            try {
+                if (scanner.hasNextInt()) {
+                    input = scanner.nextInt();
+                    scanner.nextLine();
+                    validInput = (input > 0);
+                    if (!validInput) {
+                        out.println("Please enter a positive number greater than 0.");
+                    }
+                } else {
+                    out.println("Please enter a valid integer.");
+                    scanner.nextLine();
+                }
+            } catch (Exception e) {
+                out.println("Please enter a valid integer.");
+                scanner.nextLine();
+            }
         }
-        scanner.nextLine();
+        
         return input;
     }
 
@@ -36,20 +53,29 @@ public class ConsoleInterface {
 
         while (!validLength) {
             out.print("Enter the word length: ");
-            length = scanner.nextInt();
-            scanner.nextLine();
-
-            if (length <= 0) {
-                out.println("Invalid length. Please enter a positive number.");
+            try {
+                if (scanner.hasNextInt()) {
+                    length = scanner.nextInt();
+                    scanner.nextLine();
+                    
+                    if (length > 0) {
+                        Collection<String> wordsOfLength = lexicon.wordsOfLength(length);
+                        if (!wordsOfLength.isEmpty()) {
+                            validLength = true;
+                        } else {
+                            out.println("No words of length " + length + " exist in the lexicon. Please try a different length.");
+                        }
+                    } else {
+                        out.println("Invalid length. Please enter a positive number.");
+                    }
+                } else {
+                    out.println("Please enter a valid integer.");
+                    scanner.nextLine();
+                }
+            } catch (Exception e) {
+                out.println("Please enter a valid integer.");
+                scanner.nextLine();
             }
-
-            // Check if words of this length exist in the lexicon
-            Collection<String> wordsOfLength = lexicon.wordsOfLength(length);
-            if (wordsOfLength.isEmpty()) {
-                out.println("No words of length " + length + " exist in the lexicon. Please try a different length.");
-            }
-
-            validLength = true;
         }
 
         return length;
@@ -64,18 +90,21 @@ public class ConsoleInterface {
             out.print("Enter your next guess: ");
             String input = scanner.nextLine().trim();
 
-            if (input.isEmpty()) {
+            if (!input.isEmpty() && input.length() == 1) {
+                guess = Character.toUpperCase(input.charAt(0));
+                
+                if (Character.isLetter(guess) && !executioner.letterAlreadyGuessed(guess)) {
+                    validGuess = true;
+                } else if (!Character.isLetter(guess)) {
+                    out.println("Please enter a valid letter (a-z or A-Z).");
+                } else {
+                    out.println("You have already guessed the letter '" + guess + "'. Please try a different letter.");
+                }
+            } else if (input.isEmpty()) {
                 out.println("Please enter a letter.");
+            } else {
+                out.println("Please enter only one letter.");
             }
-            guess = Character.toUpperCase(input.charAt(0));
-            if (!Character.isLetter(guess)) {
-                out.println("Please enter a valid letter (a-z or A-Z).");
-            }
-            if (executioner.guessedLetters().contains(guess)) {
-                out.println("You have already guessed the letter '" + guess + "'. Please try a different letter.");
-            }
-
-            validGuess = true;
         }
 
         return guess;
@@ -146,15 +175,36 @@ public class ConsoleInterface {
         }
     }
 
-    //ASk if the player would like another game
+    //Ask if the player would like another game
     public boolean playAgain(){
-        out.print("Would you like to play again? (y/n): ");
-        return scanner.nextLine().trim().equalsIgnoreCase("y");
+        boolean validInput = false;
+        boolean playAgain = false;
+
+        while (!validInput) {
+            out.print("Would you like to play again? (y/n): ");
+            String input = scanner.nextLine().trim();
+
+            if (!input.isEmpty()) {
+                if (input.equalsIgnoreCase("y")) {
+                    playAgain = true;
+                    validInput = true;
+                } else if (input.equalsIgnoreCase("n")) {
+                    playAgain = false;
+                    validInput = true;
+                } else {
+                    out.println("Please enter 'y' for yes or 'n' for no.");
+                }
+            } else {
+                out.println("Please enter 'y' for yes or 'n' for no.");
+            }
+        }
+
+        return playAgain;
     }
 
     //Asks user to select the secret word from the given collection and enter it in the console.
     public java.lang.String selectSecretWord(java.util.Collection<java.lang.String> secretWords){
-        String selectedWord = " ";
+        String selectedWord = "";
         boolean validWord = false;
 
         // First time: print all possible words
@@ -167,11 +217,19 @@ public class ConsoleInterface {
             out.print("Enter the word you want to use: ");
             selectedWord = scanner.nextLine().trim();
 
-            // Check if the entered word is in the collection
-            if (secretWords.contains(selectedWord)) {
-                validWord = true;
+            if (!selectedWord.isEmpty()) {
+                for (String word : secretWords) {
+                    if (word.equalsIgnoreCase(selectedWord)) {
+                        selectedWord = word;
+                        validWord = true;
+                    }
+                }
+                
+                if (!validWord) {
+                    out.println("Invalid word. Please enter one of the words from the list.");
+                }
             } else {
-                out.println("Invalid word. Please enter one of the words from the list.");
+                out.println("Please enter a word from the list.");
             }
         }
 
